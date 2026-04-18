@@ -2,7 +2,7 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 
-// Phase 8 — Multer configuration for ID document uploads
+// Phase 8  Multer configuration for ID document uploads
 const uploadDir = path.join(process.cwd(), 'uploads');
 
 // Ensure uploads directory exists
