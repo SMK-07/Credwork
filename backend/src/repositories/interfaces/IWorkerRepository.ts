@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { IWorkerDocument } from '../../models/WorkerModel';
 
-// Phase 4 — Repository interface for Worker collection
+// Phase 4  Repository interface for Worker collection
 // Services depend on this interface, NOT on Mongoose directly (Dependency Inversion)
 export interface IWorkerRepository {
   findById(id: string): Promise<IWorkerDocument | null>;
