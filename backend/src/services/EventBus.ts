@@ -1,9 +1,9 @@
 import { EventEmitter } from 'events';
 import { OutcomeType } from '../types/enums';
 
-// Phase 5 — EventBus extends Node.js EventEmitter (Observer pattern)
+// Phase 5  EventBus extends Node.js EventEmitter (Observer pattern)
 // ApplicationService emits events; TrustScoreService and NotificationService listen independently.
-// Services NEVER call each other directly — all communication goes through EventBus.
+// Services NEVER call each other directly  all communication goes through EventBus.
 
 export interface OutcomeConfirmedPayload {
   workerId: string;
@@ -40,5 +40,5 @@ class EventBus extends EventEmitter {
   }
 }
 
-// Singleton — exported for use in services
+// Singleton  exported for use in services
 export const eventBus = EventBus.getInstance();
