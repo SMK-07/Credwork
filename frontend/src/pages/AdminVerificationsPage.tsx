@@ -63,7 +63,7 @@ export class AdminVerificationsPage extends Component<Record<string, never>, Sta
           <div className="loading-container"><div className="spinner" /><p>Loading...</p></div>
         ) : verifications.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-state-icon">✅</div>
+            <div className="empty-state-icon"></div>
             <div className="empty-state-title">No pending verifications</div>
             <div className="empty-state-desc">All documents have been reviewed</div>
           </div>
@@ -93,7 +93,7 @@ export class AdminVerificationsPage extends Component<Record<string, never>, Sta
                           rel="noopener noreferrer"
                           className="btn btn-ghost btn-sm"
                         >
-                          📄 View
+                           View
                         </a>
                       </td>
                       <td>
