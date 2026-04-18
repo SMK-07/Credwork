@@ -27,7 +27,7 @@ export class Navbar extends Component {
 
     return (
       <nav className="navbar">
-        <a href="/" className="navbar-brand">⚡ Credwork</a>
+        <a href="/" className="navbar-brand"> Credwork</a>
 
         <ul className="navbar-links">
           {isAuthenticated && user ? (
