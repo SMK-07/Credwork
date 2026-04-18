@@ -8,7 +8,7 @@ import { UserRole } from '../types/enums';
 const router = Router();
 const controller = new WorkerController();
 
-// POST /api/workers — create worker profile (authenticated workers only)
+// POST /api/workers  create worker profile (authenticated workers only)
 router.post(
   '/',
   authenticateJWT,
@@ -16,7 +16,7 @@ router.post(
   (req, res, next) => controller.createProfile(req, res, next),
 );
 
-// POST /api/workers/verify — upload ID document for verification
+// POST /api/workers/verify  upload ID document for verification
 router.post(
   '/verify',
   authenticateJWT,
@@ -25,12 +25,12 @@ router.post(
   (req, res, next) => controller.uploadVerification(req, res, next),
 );
 
-// GET /api/workers/:id/profile — public profile
+// GET /api/workers/:id/profile  public profile
 router.get('/:id/profile', authenticateJWT, (req, res, next) =>
   controller.getProfile(req, res, next),
 );
 
-// GET /api/workers/:id/score — trust score and history
+// GET /api/workers/:id/score  trust score and history
 router.get('/:id/score', authenticateJWT, (req, res, next) =>
   controller.getScore(req, res, next),
 );
