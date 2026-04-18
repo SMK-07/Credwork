@@ -4,7 +4,7 @@ import { IWorkerRepository } from '../repositories/interfaces/IWorkerRepository'
 import { VerificationStatus } from '../types/enums';
 import { AppError } from '../utils/StateMachine';
 
-// Phase 7 — VerificationService handles upload, review and approval of ID documents
+// Phase 7  VerificationService handles upload, review and approval of ID documents
 export class VerificationService {
   private readonly verificationRepo: IVerificationRepository;
   private readonly workerRepo: IWorkerRepository;
