@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { AppError } from '../utils/StateMachine';
 
-// Phase 8 — Global Express error handler
+// Phase 8  Global Express error handler
 // Must be registered as the last middleware in index.ts
 export const errorHandler = (
   err: Error | AppError,
@@ -18,7 +18,7 @@ export const errorHandler = (
 
   // Mongoose duplicate key error
   if ('code' in err && (err as NodeJS.ErrnoException).code === '11000') {
-    res.status(409).json({ error: 'Duplicate entry — resource already exists' });
+    res.status(409).json({ error: 'Duplicate entry  resource already exists' });
     return;
   }
 
