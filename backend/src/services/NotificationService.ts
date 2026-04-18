@@ -2,17 +2,17 @@ import mongoose from 'mongoose';
 import { NotificationModel } from '../models/NotificationModel';
 import { eventBus, OutcomeConfirmedPayload, DisputeResolvedPayload } from './EventBus';
 
-// Phase 7 — NotificationService registers independent listeners on EventBus (Observer pattern)
+// Phase 7  NotificationService registers independent listeners on EventBus (Observer pattern)
 // It does NOT receive any direct calls from ApplicationService or DisputeService
 
 export class NotificationService {
   constructor() {
-    // Register as observer — listens to outcome.confirmed events independently
+    // Register as observer  listens to outcome.confirmed events independently
     eventBus.on('outcome.confirmed', async (payload: OutcomeConfirmedPayload) => {
       await this.handleOutcomeConfirmed(payload);
     });
 
-    // Register as observer — listens to dispute.resolved events independently
+    // Register as observer  listens to dispute.resolved events independently
     eventBus.on('dispute.resolved', async (payload: DisputeResolvedPayload) => {
       await this.handleDisputeResolved(payload);
     });
