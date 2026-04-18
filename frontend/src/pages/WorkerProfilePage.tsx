@@ -65,11 +65,11 @@ export class WorkerProfilePage extends Component<Record<string, never>, State> {
 
   private getEventLabel(type: ScoreEventType): string {
     const map: Record<ScoreEventType, string> = {
-      [ScoreEventType.WORK_CONFIRMED]: '✅ Work Confirmed',
-      [ScoreEventType.WORK_REJECTED]: '❌ Work Rejected',
-      [ScoreEventType.GHOST]: '👻 Ghost',
-      [ScoreEventType.DISPUTE_WON]: '⚖️ Dispute Won',
-      [ScoreEventType.DISPUTE_LOST]: '⚖️ Dispute Lost',
+      [ScoreEventType.WORK_CONFIRMED]: ' Work Confirmed',
+      [ScoreEventType.WORK_REJECTED]: ' Work Rejected',
+      [ScoreEventType.GHOST]: ' Ghost',
+      [ScoreEventType.DISPUTE_WON]: '️ Dispute Won',
+      [ScoreEventType.DISPUTE_LOST]: '️ Dispute Lost',
     };
     return map[type] ?? type;
   }
@@ -156,7 +156,7 @@ export class WorkerProfilePage extends Component<Record<string, never>, State> {
         {/* Upload Verification */}
         {!profile.verified && (
           <div className="card mb-6">
-            <h3 className="mb-4">📋 Upload ID Verification</h3>
+            <h3 className="mb-4"> Upload ID Verification</h3>
             <div className="form-group">
               <label className="form-label" htmlFor="doc-type">Document Type</label>
               <select
@@ -203,7 +203,7 @@ export class WorkerProfilePage extends Component<Record<string, never>, State> {
           <h3 className="mb-6">Score History</h3>
           {profile.scoreHistory.length === 0 ? (
             <div className="empty-state">
-              <div className="empty-state-icon">📊</div>
+              <div className="empty-state-icon"></div>
               <div className="empty-state-title">No score events yet</div>
               <div className="empty-state-desc">Complete jobs to build your trust score</div>
             </div>
