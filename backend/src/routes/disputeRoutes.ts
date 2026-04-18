@@ -7,12 +7,12 @@ import { UserRole } from '../types/enums';
 const router = Router();
 const controller = new DisputeController();
 
-// POST /api/disputes — worker or employer raises dispute
+// POST /api/disputes  worker or employer raises dispute
 router.post('/', authenticateJWT, (req, res, next) =>
   controller.raiseDispute(req, res, next),
 );
 
-// GET /api/disputes — list all disputes (admin only)
+// GET /api/disputes  list all disputes (admin only)
 router.get(
   '/',
   authenticateJWT,
@@ -20,7 +20,7 @@ router.get(
   (req, res, next) => controller.getAllDisputes(req, res, next),
 );
 
-// PATCH /api/disputes/:id/resolve — admin resolves dispute
+// PATCH /api/disputes/:id/resolve  admin resolves dispute
 router.patch(
   '/:id/resolve',
   authenticateJWT,
