@@ -7,7 +7,7 @@ import { UserRole } from '../types/enums';
 const router = Router();
 const controller = new ApplicationController();
 
-// POST /api/applications — worker applies for a job
+// POST /api/applications  worker applies for a job
 router.post(
   '/',
   authenticateJWT,
