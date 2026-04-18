@@ -6,7 +6,7 @@ import { ScoreTier } from '../types/enums';
 import { AppError } from '../utils/StateMachine';
 import { UserModel } from '../models/UserModel';
 
-// Phase 7 — WorkerService handles worker profile creation and retrieval
+// Phase 7  WorkerService handles worker profile creation and retrieval
 export class WorkerService {
   private readonly workerRepo: IWorkerRepository;
   private readonly scoreRepo: IScoreRepository;
@@ -32,7 +32,7 @@ export class WorkerService {
     });
   }
 
-  // userId = the User document _id (from JWT — same value in URL param)
+  // userId = the User document _id (from JWT  same value in URL param)
   public async getProfile(userId: string) {
     const worker = await this.workerRepo.findByUserId(userId);
     if (!worker) throw new AppError('Worker profile not found', 404);
