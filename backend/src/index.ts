@@ -14,7 +14,7 @@ import applicationRoutes from './routes/applicationRoutes';
 import disputeRoutes from './routes/disputeRoutes';
 import adminRoutes from './routes/adminRoutes';
 
-// Services — instantiated once at startup to register EventBus observers
+// Services  instantiated once at startup to register EventBus observers
 import { MongoScoreRepository } from './repositories/mongo/MongoScoreRepository';
 import { MongoWorkerRepository } from './repositories/mongo/MongoWorkerRepository';
 import { TrustScoreService } from './services/TrustScoreService';
@@ -25,7 +25,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT ?? 5000;
 
-// ─── Middleware ───────────────────────────────────────────────────────────────
+//  Middleware 
 app.use(cors({
   origin: process.env.FRONTEND_URL ?? 'http://localhost:5173',
   credentials: true,
@@ -36,7 +36,7 @@ app.use(express.urlencoded({ extended: true }));
 // Serve uploaded files statically
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
-// ─── Routes ──────────────────────────────────────────────────────────────────
+//  Routes 
 app.use('/api/auth', authRoutes);
 app.use('/api/workers', workerRoutes);
 app.use('/api/jobs', jobRoutes);
@@ -49,10 +49,10 @@ app.get('/health', (_req, res) => {
   res.json({ status: 'ok', environment: process.env.NODE_ENV });
 });
 
-// ─── Global Error Handler — must be last ─────────────────────────────────────
+//  Global Error Handler  must be last 
 app.use(errorHandler);
 
-// ─── Bootstrap ───────────────────────────────────────────────────────────────
+//  Bootstrap 
 async function bootstrap(): Promise<void> {
   // Connect to MongoDB Atlas
   await DatabaseConnection.getInstance().connect();
@@ -69,7 +69,7 @@ async function bootstrap(): Promise<void> {
   new NotificationService();
 
   app.listen(PORT, () => {
-    console.log(`🚀 Credwork backend running on port ${PORT}`);
+    console.log(` Credwork backend running on port ${PORT}`);
     console.log(`   Environment: ${process.env.NODE_ENV}`);
     console.log(`   MongoDB: connected`);
   });
