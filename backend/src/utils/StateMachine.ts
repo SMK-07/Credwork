@@ -1,8 +1,8 @@
 import { JobStatus, ApplicationStatus } from '../types/enums';
 
-// Phase 5 — State Machine utility class
+// Phase 5  State Machine utility class
 // Enforces valid transitions for Job and Application state machines.
-// Throws AppError with 400 status on invalid transition — never silently allows them.
+// Throws AppError with 400 status on invalid transition  never silently allows them.
 
 type ValidTransitionMap = Map<string, string[]>;
 
@@ -56,7 +56,7 @@ export class StateMachine {
   public transition(current: string, next: string): void {
     if (!this.validate(current, next)) {
       throw new AppError(
-        `Invalid state transition: ${current} → ${next}. ` +
+        `Invalid state transition: ${current} � ${next}. ` +
           `Allowed transitions from ${current}: [${this.validTransitions.get(current)?.join(', ') || 'none'}]`,
         400,
       );
