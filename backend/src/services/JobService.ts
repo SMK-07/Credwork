@@ -5,7 +5,7 @@ import { IEmployerRepository } from '../repositories/interfaces/IEmployerReposit
 import { JobStatus } from '../types/enums';
 import { stateMachine, AppError } from '../utils/StateMachine';
 
-// Phase 7 — JobService handles job lifecycle, assignment and state transitions
+// Phase 7  JobService handles job lifecycle, assignment and state transitions
 export class JobService {
   private readonly jobRepo: IJobRepository;
   private readonly workerRepo: IWorkerRepository;
@@ -55,7 +55,7 @@ export class JobService {
     );
   }
 
-  // Assign a worker to a job — validates OPEN → ASSIGNED transition via StateMachine
+  // Assign a worker to a job  validates OPEN � ASSIGNED transition via StateMachine
   public async assignWorker(jobId: string, workerId: string) {
     const job = await this.jobRepo.findById(jobId);
     if (!job) throw new AppError('Job not found', 404);
@@ -63,7 +63,7 @@ export class JobService {
     const worker = await this.workerRepo.findById(workerId);
     if (!worker) throw new AppError('Worker not found', 404);
 
-    // StateMachine guard — throws 400 AppError on invalid transition
+    // StateMachine guard  throws 400 AppError on invalid transition
     stateMachine.transition(job.status, JobStatus.ASSIGNED);
 
     return this.jobRepo.updateStatus(
