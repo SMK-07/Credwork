@@ -4,7 +4,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 
 dotenv.config();
 
-// Phase 2 — MongoDB Atlas connection using Singleton DatabaseConnection class
+// Phase 2  MongoDB Atlas connection using Singleton DatabaseConnection class
 export class DatabaseConnection {
   private static instance: DatabaseConnection;
 
@@ -25,26 +25,26 @@ export class DatabaseConnection {
 
     try {
       await mongoose.connect(uri, { serverSelectionTimeoutMS: 2000 });
-      console.log('✅ MongoDB Atlas connected successfully');
+      console.log(' MongoDB Atlas connected successfully');
     } catch (error) {
-      console.warn('⚠️ MongoDB Atlas failed, spinning up local memory fallback DB...');
+      console.warn(' MongoDB Atlas failed, spinning up local memory fallback DB...');
       try {
         const mongoServer = await MongoMemoryServer.create();
         const memoryUri = mongoServer.getUri();
         await mongoose.connect(memoryUri);
-        console.log('✅ Local MongoDB Memory Server connected successfully');
+        console.log(' Local MongoDB Memory Server connected successfully');
       } catch (memError) {
-        console.error('❌ Both Atlas and Local DB failed:', memError);
+        console.error(' Both Atlas and Local DB failed:', memError);
         process.exit(1);
       }
     }
 
     mongoose.connection.on('disconnected', () => {
-      console.warn('⚠️  MongoDB disconnected');
+      console.warn('  MongoDB disconnected');
     });
 
     mongoose.connection.on('error', (err) => {
-      console.error('❌ MongoDB error:', err);
+      console.error(' MongoDB error:', err);
     });
   }
 
