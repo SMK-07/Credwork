@@ -7,7 +7,7 @@ import { UserRole } from '../types/enums';
 const router = Router();
 const controller = new AdminController();
 
-// GET /api/admin/verifications — list pending verifications
+// GET /api/admin/verifications  list pending verifications
 router.get(
   '/verifications',
   authenticateJWT,
@@ -15,7 +15,7 @@ router.get(
   (req, res, next) => controller.listVerifications(req, res, next),
 );
 
-// PATCH /api/admin/verifications/:id — approve or reject a verification
+// PATCH /api/admin/verifications/:id  approve or reject a verification
 router.patch(
   '/verifications/:id',
   authenticateJWT,
