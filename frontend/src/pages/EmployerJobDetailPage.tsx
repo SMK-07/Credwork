@@ -120,7 +120,7 @@ export class EmployerJobDetailPage extends Component<Props, State> {
         {/* Outcome modal */}
         {outcomeData && (
           <div className="card mb-6 animate-fade-in" style={{ borderColor: 'rgba(234,179,8,0.3)', background: 'rgba(234,179,8,0.05)' }}>
-            <h3 className="mb-4">⚖️ Record Outcome</h3>
+            <h3 className="mb-4">️ Record Outcome</h3>
             <div className="flex gap-3 mb-4" style={{ flexWrap: 'wrap' }}>
               {Object.values(OutcomeType).map((ot) => (
                 <button
@@ -129,7 +129,7 @@ export class EmployerJobDetailPage extends Component<Props, State> {
                   className={`btn btn-sm ${outcomeData.outcome === ot ? (ot === OutcomeType.CONFIRMED ? 'btn-success' : ot === OutcomeType.GHOST ? 'btn-danger' : 'btn-warning') : 'btn-ghost'}`}
                   onClick={() => this.setState({ outcomeData: { ...outcomeData, outcome: ot } })}
                 >
-                  {ot === OutcomeType.CONFIRMED ? '✅' : ot === OutcomeType.REJECTED ? '❌' : '👻'} {ot}
+                  {ot === OutcomeType.CONFIRMED ? '' : ot === OutcomeType.REJECTED ? '' : ''} {ot}
                 </button>
               ))}
             </div>
@@ -166,7 +166,7 @@ export class EmployerJobDetailPage extends Component<Props, State> {
           <h3 className="mb-4">Applicants ({applications.length})</h3>
           {applications.length === 0 ? (
             <div className="empty-state">
-              <div className="empty-state-icon">👥</div>
+              <div className="empty-state-icon"></div>
               <div className="empty-state-title">No applications yet</div>
             </div>
           ) : (
