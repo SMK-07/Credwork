@@ -7,9 +7,9 @@ import { ReasoningProtocol } from './scoring/ReasoningProtocol';
 import { OutcomeType, ScoreTier } from '../types/enums';
 import { eventBus, OutcomeConfirmedPayload, DisputeResolvedPayload } from './EventBus';
 
-// Phase 6 & 7 — TrustScoreService
+// Phase 6 & 7  TrustScoreService
 // - Uses Strategy pattern to select between StandardScoring and ReasoningProtocol
-// - Listens to EventBus events (Observer pattern) — never called directly by ApplicationService
+// - Listens to EventBus events (Observer pattern)  never called directly by ApplicationService
 // - All score updates are atomic via MongoDB session
 
 export class TrustScoreService {
@@ -20,7 +20,7 @@ export class TrustScoreService {
     this.scoreRepo = scoreRepo;
     this.workerRepo = workerRepo;
 
-    // Phase 7 — Register as observer on EventBus
+    // Phase 7  Register as observer on EventBus
     // TrustScoreService listens for outcome.confirmed events independently
     eventBus.on('outcome.confirmed', async (payload: OutcomeConfirmedPayload) => {
       await this.handleOutcomeConfirmed(payload);
@@ -32,7 +32,7 @@ export class TrustScoreService {
     });
   }
 
-  // Strategy Pattern — selects strategy at runtime based on presence of reason
+  // Strategy Pattern  selects strategy at runtime based on presence of reason
   public selectStrategy(reason?: string): ScoringStrategy {
     if (reason && reason.trim().length > 0) {
       return new ReasoningProtocol();
@@ -54,7 +54,7 @@ export class TrustScoreService {
     return Math.min(100.0, Math.max(0.0, score));
   }
 
-  // Core method — atomic score update via MongoDB session
+  // Core method  atomic score update via MongoDB session
   public async computeAndApply(
     workerId: string,
     applicationId: string,
@@ -101,7 +101,7 @@ export class TrustScoreService {
     }
   }
 
-  // Observer handler — called when outcome.confirmed event fires
+  // Observer handler  called when outcome.confirmed event fires
   private async handleOutcomeConfirmed(payload: OutcomeConfirmedPayload): Promise<void> {
     try {
       await this.computeAndApply(
@@ -115,10 +115,10 @@ export class TrustScoreService {
     }
   }
 
-  // Observer handler — called when dispute.resolved event fires
+  // Observer handler  called when dispute.resolved event fires
   private async handleDisputeResolved(payload: DisputeResolvedPayload): Promise<void> {
     try {
-      // WORKER_FAVOUR → DISPUTE_WON (+4), WORKER_FAULT → DISPUTE_LOST (-6)
+      // WORKER_FAVOUR � DISPUTE_WON (+4), WORKER_FAULT � DISPUTE_LOST (-6)
       const outcomeKey =
         payload.resolution === 'WORKER_FAVOUR' ? 'DISPUTE_WON' : 'DISPUTE_LOST';
       await this.computeAndApply(
