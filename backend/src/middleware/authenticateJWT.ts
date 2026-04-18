@@ -12,7 +12,7 @@ declare global {
   }
 }
 
-// Phase 8 — JWT authentication middleware
+// Phase 8  JWT authentication middleware
 // Verifies Bearer token and attaches user to req.user
 export const authenticateJWT = (
   req: Request,
