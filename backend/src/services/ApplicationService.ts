@@ -5,9 +5,9 @@ import { eventBus } from './EventBus';
 import { AppError } from '../utils/StateMachine';
 import { stateMachine } from '../utils/StateMachine';
 
-// Phase 7 — ApplicationService
+// Phase 7  ApplicationService
 // - Saves application outcomes and emits 'outcome.confirmed' event via EventBus
-// - Score update happens in TrustScoreService listener — NOT called directly here (Observer pattern)
+// - Score update happens in TrustScoreService listener  NOT called directly here (Observer pattern)
 
 export class ApplicationService {
   private readonly appRepo: IApplicationRepository;
@@ -69,7 +69,7 @@ export class ApplicationService {
 
     await this.appRepo.updateOutcome(applicationId, outcome, reason ?? '', nextStatus);
 
-    // Emit event — observers (TrustScoreService, NotificationService) handle the rest
+    // Emit event  observers (TrustScoreService, NotificationService) handle the rest
     eventBus.emit('outcome.confirmed', {
       workerId,
       applicationId,
