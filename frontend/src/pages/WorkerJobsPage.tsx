@@ -88,7 +88,7 @@ export class WorkerJobsPage extends Component<Record<string, never>, State> {
               className="btn btn-secondary"
               onClick={() => this.fetchJobs()}
             >
-              🔍 Search
+               Search
             </button>
             {skillFilter && (
               <button
@@ -118,7 +118,7 @@ export class WorkerJobsPage extends Component<Record<string, never>, State> {
           </div>
         ) : jobs.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-state-icon">💼</div>
+            <div className="empty-state-icon"></div>
             <div className="empty-state-title">No open jobs found</div>
             <div className="empty-state-desc">
               {skillFilter ? `No jobs require "${skillFilter}"` : 'Check back later for new postings'}
