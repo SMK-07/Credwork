@@ -96,7 +96,7 @@ export class JobController {
       }
 
       await applicationService.saveOutcome(applicationId, workerId, outcome as OutcomeType, reason);
-      res.status(200).json({ message: 'Outcome recorded — score update in progress' });
+      res.status(200).json({ message: 'Outcome recorded  score update in progress' });
     } catch (err) {
       next(err);
     }
