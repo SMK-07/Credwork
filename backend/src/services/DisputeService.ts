@@ -5,7 +5,7 @@ import { DisputeStatus } from '../types/enums';
 import { eventBus } from './EventBus';
 import { AppError } from '../utils/StateMachine';
 
-// Phase 7 — DisputeService handles dispute lifecycle and emits 'dispute.resolved' event
+// Phase 7  DisputeService handles dispute lifecycle and emits 'dispute.resolved' event
 export class DisputeService {
   private readonly disputeRepo: IDisputeRepository;
   private readonly appRepo: IApplicationRepository;
@@ -42,7 +42,7 @@ export class DisputeService {
     return this.disputeRepo.findAllOpen();
   }
 
-  // Admin resolves dispute — emits 'dispute.resolved' so TrustScoreService applies delta
+  // Admin resolves dispute  emits 'dispute.resolved' so TrustScoreService applies delta
   public async resolveDispute(
     disputeId: string,
     resolution: 'WORKER_FAVOUR' | 'WORKER_FAULT',
@@ -59,7 +59,7 @@ export class DisputeService {
     const app = await this.appRepo.findById(dispute.applicationId.toString());
     if (!app) throw new AppError('Associated application not found', 404);
 
-    // Emit event — TrustScoreService listener handles score update (Observer pattern)
+    // Emit event  TrustScoreService listener handles score update (Observer pattern)
     eventBus.emit('dispute.resolved', {
       workerId: app.workerId.toString(),
       applicationId: app._id ? (app._id as mongoose.Types.ObjectId).toString() : '',
