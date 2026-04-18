@@ -32,11 +32,11 @@ export class TrustScoreBadge extends Component<Props> {
 
   private getTierIcon(tier: ScoreTier): string {
     const map: Record<ScoreTier, string> = {
-      [ScoreTier.UNVERIFIED]: '⚠️',
-      [ScoreTier.NEW]: '🌱',
-      [ScoreTier.RELIABLE]: '⭐',
-      [ScoreTier.TRUSTED]: '✅',
-      [ScoreTier.ELITE]: '🏆',
+      [ScoreTier.UNVERIFIED]: '️',
+      [ScoreTier.NEW]: '',
+      [ScoreTier.RELIABLE]: '',
+      [ScoreTier.TRUSTED]: '',
+      [ScoreTier.ELITE]: '',
     };
     return map[tier];
   }
