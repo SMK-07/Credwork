@@ -95,7 +95,7 @@ export class AdminDisputesPage extends Component<Record<string, never>, State> {
           <div className="loading-container"><div className="spinner" /><p>Loading...</p></div>
         ) : disputes.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-state-icon">⚖️</div>
+            <div className="empty-state-icon">️</div>
             <div className="empty-state-title">No disputes</div>
             <div className="empty-state-desc">All clear — no pending disputes</div>
           </div>
