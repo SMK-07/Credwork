@@ -125,7 +125,7 @@ export class EmployerDashboardPage extends Component<Record<string, never>, Stat
         {/* Post Job Form */}
         {showForm && (
           <div className="card mb-6 animate-fade-in">
-            <h3 className="mb-4">📋 Post a New Job</h3>
+            <h3 className="mb-4"> Post a New Job</h3>
             {postMsg && (
               <div className={`alert mb-4 ${postMsg.includes('Failed') ? 'alert-error' : 'alert-success'}`}>
                 {postMsg}
@@ -183,7 +183,7 @@ export class EmployerDashboardPage extends Component<Record<string, never>, Stat
           </div>
         ) : jobs.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-state-icon">💼</div>
+            <div className="empty-state-icon"></div>
             <div className="empty-state-title">No jobs posted yet</div>
             <div className="empty-state-desc">Click "Post Job" to get started</div>
           </div>
