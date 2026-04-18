@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { IWorkerDocument, WorkerModel } from '../../models/WorkerModel';
 import { IWorkerRepository } from '../interfaces/IWorkerRepository';
 
-// Phase 4 — Concrete Mongoose implementation of IWorkerRepository
+// Phase 4  Concrete Mongoose implementation of IWorkerRepository
 export class MongoWorkerRepository implements IWorkerRepository {
   public async findById(id: string): Promise<IWorkerDocument | null> {
     return WorkerModel.findById(id).exec();
