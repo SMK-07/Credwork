@@ -59,11 +59,11 @@ export class LoginPage extends Component<Record<string, never>, State> {
     return (
       <div className="auth-container animate-fade-in">
         <div className="auth-card">
-          <div className="auth-logo">⚡ Credwork</div>
+          <div className="auth-logo"> Credwork</div>
           <h2 className="auth-title">Welcome back</h2>
           <p className="auth-subtitle">Sign in to your account</p>
 
-          {error && <div className="alert alert-error mb-4">⚠ {error}</div>}
+          {error && <div className="alert alert-error mb-4"> {error}</div>}
 
           <div className="form-group">
             <label className="form-label" htmlFor="login-email">Email Address</label>
