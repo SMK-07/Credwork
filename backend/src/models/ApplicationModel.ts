@@ -44,7 +44,7 @@ const ApplicationSchema = new Schema<IApplicationDocument>(
   { timestamps: false, versionKey: false },
 );
 
-// Compound unique index — one application per worker per job
+// Compound unique index  one application per worker per job
 ApplicationSchema.index({ workerId: 1, jobId: 1 }, { unique: true });
 
 export const ApplicationModel = mongoose.model<IApplicationDocument>(
