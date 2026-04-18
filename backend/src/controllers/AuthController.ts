@@ -8,8 +8,8 @@ const authService = new AuthService();
 const workerRepo = new MongoWorkerRepository();
 const employerRepo = new MongoEmployerRepository();
 
-// Phase 8 — AuthController handles all auth routes (register, login, OTP)
-// Delegates ALL logic to AuthService — no business logic here
+// Phase 8  AuthController handles all auth routes (register, login, OTP)
+// Delegates ALL logic to AuthService  no business logic here
 export class AuthController {
   public async register(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
