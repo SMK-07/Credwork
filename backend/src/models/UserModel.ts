@@ -2,7 +2,7 @@ import mongoose, { Document, Schema } from 'mongoose';
 import bcrypt from 'bcryptjs';
 import { UserRole } from '../types/enums';
 
-// Phase 3 — Abstract base User schema
+// Phase 3  Abstract base User schema
 // Worker and Employer documents reference this via userId field
 
 export interface IUserDocument extends Document {
@@ -39,7 +39,7 @@ const UserSchema = new Schema<IUserDocument>(
   { timestamps: false, versionKey: false },
 );
 
-// Instance method — validates plain password against stored hash
+// Instance method  validates plain password against stored hash
 UserSchema.methods.validatePassword = async function (
   password: string,
 ): Promise<boolean> {
