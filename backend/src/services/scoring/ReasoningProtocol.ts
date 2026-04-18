@@ -1,6 +1,6 @@
 import { ScoringStrategy } from './ScoringStrategy';
 
-// Phase 6 — ReasoningProtocol: selected when a reason string is present
+// Phase 6  ReasoningProtocol: selected when a reason string is present
 // Classifies the reason and modifies the delta accordingly
 
 type ReasonClassification = 'mitigating' | 'aggravating' | 'neutral';
@@ -46,7 +46,7 @@ export class ReasoningProtocol extends ScoringStrategy {
     }
 
     if (!reason) {
-      // No reason provided — apply standard delta
+      // No reason provided  apply standard delta
       return baseDelta;
     }
 
@@ -54,16 +54,16 @@ export class ReasoningProtocol extends ScoringStrategy {
 
     switch (classification) {
       case 'mitigating':
-        // Mitigating reason — reduce penalty by 50% (delta × 0.5)
+        // Mitigating reason  reduce penalty by 50% (delta × 0.5)
         return baseDelta * 0.5;
 
       case 'aggravating':
-        // Aggravating reason — full penalty (delta × 1.0)
+        // Aggravating reason  full penalty (delta × 1.0)
         return baseDelta * 1.0;
 
       case 'neutral':
       default:
-        // Neutral — standard delta, reason is still logged
+        // Neutral  standard delta, reason is still logged
         return baseDelta * 1.0;
     }
   }
