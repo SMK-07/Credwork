@@ -1,6 +1,6 @@
 import { OutcomeType, ScoreEventType } from '../../types/enums';
 
-// Phase 6 — Abstract Strategy class for trust score computation
+// Phase 6  Abstract Strategy class for trust score computation
 // Open for extension (new strategies), closed for modification (OCP principle)
 
 export abstract class ScoringStrategy {
