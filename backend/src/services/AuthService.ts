@@ -5,7 +5,7 @@ import { UserModel } from '../models/UserModel';
 import { UserRole } from '../types/enums';
 import { AppError } from '../utils/StateMachine';
 
-// Phase 7 — AuthService handles registration and login via email
+// Phase 7  AuthService handles registration and login via email
 export class AuthService {
   private readonly jwtSecret: string;
 
