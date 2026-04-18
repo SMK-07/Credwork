@@ -40,7 +40,7 @@ const WorkerSchema = new Schema<IWorkerDocument>(
   { timestamps: false, versionKey: false },
 );
 
-// Utility — compute tier from trust score
+// Utility  compute tier from trust score
 WorkerSchema.methods.computeTier = function (): ScoreTier {
   const score: number = this.trustScore;
   if (score <= 30) return ScoreTier.UNVERIFIED;
