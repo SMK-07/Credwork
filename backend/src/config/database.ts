@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import { MongoMemoryServer } from 'mongodb-memory-server';
 
 dotenv.config();
 
@@ -27,14 +26,17 @@ export class DatabaseConnection {
       await mongoose.connect(uri, { serverSelectionTimeoutMS: 2000 });
       console.log(' MongoDB Atlas connected successfully');
     } catch (error) {
-      console.warn(' MongoDB Atlas failed, spinning up local memory fallback DB...');
+      console.warn('⚠️ MongoDB Atlas failed, attempting local memory fallback...');
       try {
+        // Dynamic import — only available in local dev (devDependency), not on Render
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const { MongoMemoryServer } = require('mongodb-memory-server');
         const mongoServer = await MongoMemoryServer.create();
         const memoryUri = mongoServer.getUri();
         await mongoose.connect(memoryUri);
-        console.log(' Local MongoDB Memory Server connected successfully');
+        console.log('✅ Local MongoDB Memory Server connected successfully');
       } catch (memError) {
-        console.error(' Both Atlas and Local DB failed:', memError);
+        console.error('❌ Both Atlas and Local DB failed:', memError);
         process.exit(1);
       }
     }
