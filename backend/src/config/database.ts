@@ -26,9 +26,19 @@ export class DatabaseConnection {
       await mongoose.connect(uri, { serverSelectionTimeoutMS: 2000 });
       console.log(' MongoDB Atlas connected successfully');
     } catch (error) {
+      const isProduction = process.env.NODE_ENV === 'production';
+
+      if (isProduction) {
+        // In production, we must connect to Atlas — no fallback
+        console.error('❌ MongoDB Atlas connection failed in production:', error);
+        console.error('   Check: MONGODB_URI is set correctly in Render env vars');
+        console.error('   Check: 0.0.0.0/0 is whitelisted in MongoDB Atlas Network Access');
+        process.exit(1);
+      }
+
+      // Local dev only — spin up in-memory MongoDB
       console.warn('⚠️ MongoDB Atlas failed, attempting local memory fallback...');
       try {
-        // Dynamic import — only available in local dev (devDependency), not on Render
         // eslint-disable-next-line @typescript-eslint/no-var-requires
         const { MongoMemoryServer } = require('mongodb-memory-server');
         const mongoServer = await MongoMemoryServer.create();
