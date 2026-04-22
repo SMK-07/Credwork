@@ -23,7 +23,7 @@ export class DatabaseConnection {
     }
 
     try {
-      await mongoose.connect(uri, { serverSelectionTimeoutMS: 2000 });
+      await mongoose.connect(uri, { serverSelectionTimeoutMS: 10000 });
       console.log(' MongoDB Atlas connected successfully');
     } catch (error) {
       const isProduction = process.env.NODE_ENV === 'production';

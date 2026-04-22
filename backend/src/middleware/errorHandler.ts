@@ -9,18 +9,19 @@ export const errorHandler = (
   res: Response,
   _next: NextFunction,
 ): void => {
-  console.error('[ErrorHandler]', err.message);
+  const errAny = err as unknown as Record<string, unknown>;
+  console.error('[ErrorHandler]', err.name, err.message, errAny['code'] ?? '');
 
   if (err instanceof AppError) {
     res.status(err.statusCode).json({ error: err.message });
     return;
   }
 
-  // Mongoose duplicate key error
-  if ('code' in err && (err as NodeJS.ErrnoException).code === '11000') {
-    res.status(409).json({ error: 'Duplicate entry  resource already exists' });
+  // MongoDB duplicate key error — code is a number (11000), not a string
+  if ('code' in err && errAny['code'] === 11000) {
+    res.status(409).json({ error: 'Duplicate entry — resource already exists' });
     return;
   }
 
-  res.status(500).json({ error: 'Internal server error' });
+  res.status(500).json({ error: err.message ?? 'Internal server error' });
 };
