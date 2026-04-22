@@ -12,7 +12,7 @@ const workerRepo = new MongoWorkerRepository();
 const employerRepo = new MongoEmployerRepository();
 const appRepo = new MongoApplicationRepository();
 
-const jobService = new JobService(jobRepo, workerRepo, employerRepo);
+const jobService = new JobService(jobRepo, workerRepo, employerRepo, appRepo);
 const applicationService = new ApplicationService(appRepo);
 
 export class JobController {

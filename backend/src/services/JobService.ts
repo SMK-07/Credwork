@@ -2,7 +2,8 @@ import mongoose from 'mongoose';
 import { IJobRepository } from '../repositories/interfaces/IJobRepository';
 import { IWorkerRepository } from '../repositories/interfaces/IWorkerRepository';
 import { IEmployerRepository } from '../repositories/interfaces/IEmployerRepository';
-import { JobStatus } from '../types/enums';
+import { IApplicationRepository } from '../repositories/interfaces/IApplicationRepository';
+import { JobStatus, ApplicationStatus } from '../types/enums';
 import { stateMachine, AppError } from '../utils/StateMachine';
 
 // Phase 7  JobService handles job lifecycle, assignment and state transitions
@@ -10,15 +11,18 @@ export class JobService {
   private readonly jobRepo: IJobRepository;
   private readonly workerRepo: IWorkerRepository;
   private readonly employerRepo: IEmployerRepository;
+  private readonly appRepo: IApplicationRepository;
 
   constructor(
     jobRepo: IJobRepository,
     workerRepo: IWorkerRepository,
     employerRepo: IEmployerRepository,
+    appRepo: IApplicationRepository,
   ) {
     this.jobRepo = jobRepo;
     this.workerRepo = workerRepo;
     this.employerRepo = employerRepo;
+    this.appRepo = appRepo;
   }
 
   public async postJob(
@@ -71,6 +75,20 @@ export class JobService {
 
     // StateMachine guard  throws 400 AppError on invalid transition
     stateMachine.transition(job.status, JobStatus.ASSIGNED);
+
+    // Phase 11 — Sync Application state: worker must be ACCEPTED before outcome
+    const wid = (worker._id as mongoose.Types.ObjectId).toString();
+    const application = await this.appRepo.findByWorkerAndJob(wid, jobId);
+    if (application) {
+      // Transition application to ACCEPTED if it is currently PENDING
+      if (application.status === ApplicationStatus.PENDING) {
+        stateMachine.transition(application.status, ApplicationStatus.ACCEPTED);
+        await this.appRepo.updateStatus(
+          (application._id as mongoose.Types.ObjectId).toString(),
+          ApplicationStatus.ACCEPTED
+        );
+      }
+    }
 
     return this.jobRepo.updateStatus(
       jobId,
