@@ -15,6 +15,14 @@ router.post(
   (req, res, next) => controller.applyForJob(req, res, next),
 );
 
+// GET /api/applications/my  worker views their own applications
+router.get(
+  '/my',
+  authenticateJWT,
+  authorizeRole(UserRole.WORKER),
+  (req, res, next) => controller.getMyApplications(req, res, next),
+);
+
 // GET /api/applications/:id
 router.get('/:id', authenticateJWT, (req, res, next) =>
   controller.getApplication(req, res, next),

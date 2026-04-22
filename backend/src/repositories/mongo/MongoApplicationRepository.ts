@@ -11,7 +11,9 @@ export class MongoApplicationRepository implements IApplicationRepository {
   public async findByWorkerId(workerId: string): Promise<IApplicationDocument[]> {
     return ApplicationModel.find({
       workerId: new mongoose.Types.ObjectId(workerId),
-    }).exec();
+    })
+      .populate('jobId')
+      .exec();
   }
 
   public async findByJobId(jobId: string): Promise<IApplicationDocument[]> {

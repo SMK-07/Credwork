@@ -53,4 +53,18 @@ export class ApplicationController {
       next(err);
     }
   }
+
+  public async getMyApplications(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const userId = req.user!.userId;
+      const worker = await workerRepo.findByUserId(userId);
+      if (!worker) {
+        throw new AppError('Worker profile not found', 404);
+      }
+      const apps = await applicationService.getApplicationsByWorker((worker._id as any).toString());
+      res.status(200).json(apps);
+    } catch (err) {
+      next(err);
+    }
+  }
 }

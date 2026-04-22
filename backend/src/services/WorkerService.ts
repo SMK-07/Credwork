@@ -32,12 +32,18 @@ export class WorkerService {
     });
   }
 
-  // userId = the User document _id (from JWT  same value in URL param)
-  public async getProfile(userId: string) {
-    const worker = await this.workerRepo.findByUserId(userId);
+  // Robust Lookup: id can be either a WorkerProfileId (_id) or a UserId
+  public async getProfile(id: string) {
+    // Try primary id (workerId) first
+    let worker = await this.workerRepo.findById(id);
+    // Fallback to userId
+    if (!worker) {
+      worker = await this.workerRepo.findByUserId(id);
+    }
+    
     if (!worker) throw new AppError('Worker profile not found', 404);
 
-    const user = await UserModel.findById(userId).exec();
+    const user = await UserModel.findById(worker.userId).exec();
     const workerId = (worker._id as mongoose.Types.ObjectId).toString();
     const scoreEvents = await this.scoreRepo.findByWorkerId(workerId);
     const tier = this.computeTier(worker.trustScore);
@@ -53,8 +59,14 @@ export class WorkerService {
     };
   }
 
-  public async getScore(userId: string) {
-    const worker = await this.workerRepo.findByUserId(userId);
+  public async getScore(id: string) {
+    // Try primary id (workerId) first
+    let worker = await this.workerRepo.findById(id);
+    // Fallback to userId
+    if (!worker) {
+      worker = await this.workerRepo.findByUserId(id);
+    }
+
     if (!worker) throw new AppError('Worker profile not found', 404);
 
     const workerId = (worker._id as mongoose.Types.ObjectId).toString();

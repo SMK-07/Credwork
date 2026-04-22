@@ -7,7 +7,9 @@ import { WorkerProfile, ScoreEventType } from '../types';
 interface State {
   profile: WorkerProfile | null;
   loading: boolean;
+  appsLoading: boolean;
   error: string;
+  applications: any[];
   uploadFile: File | null;
   uploadDocType: string;
   uploading: boolean;
@@ -23,7 +25,9 @@ export class WorkerProfilePage extends Component<Record<string, never>, State> {
     super(props);
     this.state = {
       profile: null,
+      applications: [],
       loading: true,
+      appsLoading: true,
       error: '',
       uploadFile: null,
       uploadDocType: 'Aadhaar',
@@ -40,8 +44,12 @@ export class WorkerProfilePage extends Component<Record<string, never>, State> {
         `/workers/${user.userId}/profile`,
       );
       this.setState({ profile, loading: false });
+      
+      // Fetch Applications
+      const applications = await apiClient.get<any[]>('/applications/my');
+      this.setState({ applications, appsLoading: false });
     } catch {
-      this.setState({ error: 'Failed to load profile', loading: false });
+      this.setState({ error: 'Failed to load profile details', loading: false, appsLoading: false });
     }
   }
 
@@ -197,6 +205,53 @@ export class WorkerProfilePage extends Component<Record<string, never>, State> {
             </button>
           </div>
         )}
+
+        </div>
+
+        {/* My Applications */}
+        <div className="card mb-6">
+          <h3 className="mb-6">My Applications</h3>
+          {appsLoading ? (
+            <div className="flex justify-center p-4"><div className="spinner" /></div>
+          ) : applications.length === 0 ? (
+            <div className="empty-state">
+              <div className="empty-state-title">No applications yet</div>
+              <div className="empty-state-desc">Apply for jobs to see them here</div>
+            </div>
+          ) : (
+            <div className="table-wrapper">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Job Title</th>
+                    <th>Applied On</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {applications.map((app) => (
+                    <tr key={app._id}>
+                      <td className="font-medium">{app.jobId?.title || 'Unknown Job'}</td>
+                      <td className="text-muted text-sm">
+                        {new Date(app.appliedAt).toLocaleDateString('en-IN')}
+                      </td>
+                      <td>
+                        <span className={`status-badge status-${app.status.toLowerCase().replace('_', '-')}`}>
+                          {app.status}
+                        </span>
+                        {app.outcome && (
+                          <div className="text-xs mt-1" style={{ opacity: 0.8 }}>
+                             {app.outcome === 'CONFIRMED' ? 'Verified Work' : app.outcome}
+                          </div>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
 
         {/* Score History */}
         <div className="card">
