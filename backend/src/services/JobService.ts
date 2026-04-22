@@ -55,12 +55,18 @@ export class JobService {
     );
   }
 
-  // Assign a worker to a job  validates OPEN † ASSIGNED transition via StateMachine
+  // Assign a worker to a job  validates OPEN -> ASSIGNED transition via StateMachine
   public async assignWorker(jobId: string, workerId: string) {
     const job = await this.jobRepo.findById(jobId);
     if (!job) throw new AppError('Job not found', 404);
 
-    const worker = await this.workerRepo.findById(workerId);
+    let worker = await this.workerRepo.findById(workerId);
+    
+    // Fallback â€” handle cases where workerId might actually be a userId (legacy data)
+    if (!worker) {
+      worker = await this.workerRepo.findByUserId(workerId);
+    }
+
     if (!worker) throw new AppError('Worker not found', 404);
 
     // StateMachine guard  throws 400 AppError on invalid transition
