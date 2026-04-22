@@ -6,8 +6,8 @@ import { IApplicationRepository } from '../repositories/interfaces/IApplicationR
 import { JobStatus, ApplicationStatus } from '../types/enums';
 import { stateMachine, AppError } from '../utils/StateMachine';
 
-// Phase 7  JobService handles job lifecycle, assignment and state transitions
-export class JobService {
+// Phase 7  JobProcessingService handles job lifecycle, assignment and state transitions
+export class JobProcessingService {
   private readonly jobRepo: IJobRepository;
   private readonly workerRepo: IWorkerRepository;
   private readonly employerRepo: IEmployerRepository;

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { JobService } from '../services/JobService';
+import { JobProcessingService } from '../services/JobProcessingService';
 import { ApplicationService } from '../services/ApplicationService';
 import { MongoJobRepository } from '../repositories/mongo/MongoJobRepository';
 import { MongoWorkerRepository } from '../repositories/mongo/MongoWorkerRepository';
@@ -12,7 +12,7 @@ const workerRepo = new MongoWorkerRepository();
 const employerRepo = new MongoEmployerRepository();
 const appRepo = new MongoApplicationRepository();
 
-const jobService = new JobService(jobRepo, workerRepo, employerRepo, appRepo);
+const jobService = new JobProcessingService(jobRepo, workerRepo, employerRepo, appRepo);
 const applicationService = new ApplicationService(appRepo);
 
 export class JobController {
@@ -90,7 +90,7 @@ export class JobController {
       }
       if (!Object.values(OutcomeType).includes(outcome)) {
         res.status(400).json({
-          error: `Invalid outcome. Must be one of: ${Object.values(OutcomeType).join(', ')}`,
+          error: `Invalid outcome. Must be one of: \${Object.values(OutcomeType).join(', ')}`,
         });
         return;
       }
