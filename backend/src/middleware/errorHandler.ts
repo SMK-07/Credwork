@@ -17,9 +17,15 @@ export const errorHandler = (
     return;
   }
 
-  // MongoDB duplicate key error — code is a number (11000), not a string
+  // MongoDB duplicate key error (code 11000)
   if ('code' in err && errAny['code'] === 11000) {
-    res.status(409).json({ error: 'Duplicate entry — resource already exists' });
+    const keyPattern = JSON.stringify(errAny['keyPattern'] || {});
+    console.error(`[DuplicateKeyError] Clashing Key Pattern: ${keyPattern}`);
+    
+    res.status(409).json({ 
+      error: 'Duplicate entry — resource already exists',
+      details: `Field clash: ${keyPattern}`
+    });
     return;
   }
 
