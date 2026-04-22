@@ -76,20 +76,6 @@ export class JobService {
     // StateMachine guard  throws 400 AppError on invalid transition
     stateMachine.transition(job.status, JobStatus.ASSIGNED);
 
-    // Phase 11 — Sync Application state: worker must be ACCEPTED before outcome
-    const wid = (worker._id as mongoose.Types.ObjectId).toString();
-    const application = await this.appRepo.findByWorkerAndJob(wid, jobId);
-    if (application) {
-      // Transition application to ACCEPTED if it is currently PENDING
-      if (application.status === ApplicationStatus.PENDING) {
-        stateMachine.transition(application.status, ApplicationStatus.ACCEPTED);
-        await this.appRepo.updateStatus(
-          (application._id as mongoose.Types.ObjectId).toString(),
-          ApplicationStatus.ACCEPTED
-        );
-      }
-    }
-
     return this.jobRepo.updateStatus(
       jobId,
       JobStatus.ASSIGNED,

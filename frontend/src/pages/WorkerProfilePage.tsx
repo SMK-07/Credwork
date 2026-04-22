@@ -83,7 +83,7 @@ export class WorkerProfilePage extends Component<Record<string, never>, State> {
   }
 
   public render(): React.ReactNode {
-    const { profile, loading, error, uploadFile, uploadDocType, uploading, uploadMsg } =
+    const { profile, loading, appsLoading, error, applications, uploadFile, uploadDocType, uploading, uploadMsg } =
       this.state;
 
     if (loading) {
@@ -205,9 +205,7 @@ export class WorkerProfilePage extends Component<Record<string, never>, State> {
             </button>
           </div>
         )}
-
-        </div>
-
+        
         {/* My Applications */}
         <div className="card mb-6">
           <h3 className="mb-6">My Applications</h3>
@@ -229,21 +227,16 @@ export class WorkerProfilePage extends Component<Record<string, never>, State> {
                   </tr>
                 </thead>
                 <tbody>
-                  {applications.map((app) => (
+                  {applications.map((app: any) => (
                     <tr key={app._id}>
                       <td className="font-medium">{app.jobId?.title || 'Unknown Job'}</td>
                       <td className="text-muted text-sm">
                         {new Date(app.appliedAt).toLocaleDateString('en-IN')}
                       </td>
                       <td>
-                        <span className={`status-badge status-${app.status.toLowerCase().replace('_', '-')}`}>
-                          {app.status}
-                        </span>
-                        {app.outcome && (
-                          <div className="text-xs mt-1" style={{ opacity: 0.8 }}>
-                             {app.outcome === 'CONFIRMED' ? 'Verified Work' : app.outcome}
-                          </div>
-                        )}
+                        <div className="text-muted text-sm">
+                          {app.status === 'PENDING' ? 'Applied' : 'Outcome will be shared soon'}
+                        </div>
                       </td>
                     </tr>
                   ))}
