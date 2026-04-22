@@ -25,6 +25,17 @@ export class DatabaseConnection {
     try {
       await mongoose.connect(uri, { serverSelectionTimeoutMS: 10000 });
       console.log(' MongoDB Atlas connected successfully');
+
+      // Phase 11 — Auto-cleanup legacy unique indexes that block registration
+      try {
+        const db = mongoose.connection.db;
+        if (db) {
+          await db.collection('users').dropIndex('phone_1');
+          console.log('✅ Successfully dropped legacy index: phone_1');
+        }
+      } catch (err) {
+        // Index likely already gone or doesn't exist, ignore
+      }
     } catch (error) {
       const isProduction = process.env.NODE_ENV === 'production';
 
